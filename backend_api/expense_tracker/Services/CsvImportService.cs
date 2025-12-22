@@ -6,14 +6,17 @@ namespace expense_tracker.Services
     public class CsvImportService
     {
         private readonly string _connectionString;
-        public CsvImportService(IConfiguration configuration)
+        private readonly ILogger<CsvImportService> _logger;
+        public CsvImportService(IConfiguration configuration,
+            ILogger<CsvImportService> logger)
         {
             _connectionString = configuration.GetConnectionString("localConnection") ?? 
                 throw new InvalidOperationException("Connection string 'localConnection' not found.");
+            _logger = logger;
         }
 
 
-        public async Task<int> ImportTransactionsAsync(Stream csvStream) 
+        public async Task<Models.ImportResult> ImportTransactionsAsync(Stream csvStream) 
         {
           
             using var reader = new StreamReader(csvStream);
@@ -24,6 +27,7 @@ namespace expense_tracker.Services
 
             await connection.OpenAsync(); // Open the database connection
             int inserted = 0; // Counter for inserted records
+            int skipped = 0; // Counter for skipped records
             foreach (var csvTransaction in records)
             {
                 var transaction = new Models.Transaction
@@ -35,12 +39,14 @@ namespace expense_tracker.Services
                     Balance = Utils.MoneyParser.ParseMoney(csvTransaction.Balance)
                 };
                 
-                using var command = new NpgsqlCommand( 
+                using var command = new NpgsqlCommand(
                      """
                     INSERT INTO transactions
-                        (date, transaction_type, description, amount, balance)
+                        (transaction_date, transaction_type, description, amount, balance)
                     VALUES
                         (@date, @t_type, @description, @amount, @balance)
+                    ON CONFLICT (transaction_date, amount, balance)
+                    DO NOTHING;
                     """,
                      connection
                  );
@@ -50,10 +56,32 @@ namespace expense_tracker.Services
                 command.Parameters.AddWithValue("amount", transaction.Amount);
                 command.Parameters.AddWithValue("balance", transaction.Balance);
         
-                inserted += await command.ExecuteNonQueryAsync(); 
+                int new_row = await command.ExecuteNonQueryAsync();
+                if (new_row == 1)
+                {
+                    inserted++;
+                } else
+                {
+                    skipped++;
+                }
+                   
             }
 
-            return inserted;
+            if (inserted == 0)
+            {
+                _logger.LogWarning("No new records were inserted from the CSV import.");
+            } else
+            {
+                _logger.LogInformation(
+                    "CSV import completed. Inserted: {Inserted}, Skipped: {Skipped}",
+                    inserted, skipped);
+            }
+              
+            return new Models.ImportResult
+            {
+                Inserted = inserted,
+                Skipped = skipped
+            };
         }
 
     }

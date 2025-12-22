@@ -6,6 +6,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<expense_tracker.Services.CsvImportService>();
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(); 
 var app = builder.Build();
 
 
@@ -17,8 +19,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-
-
 
 app.MapGet("/", () => "Hello, world!");
 app.MapControllers();
