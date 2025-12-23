@@ -1,0 +1,10 @@
+﻿namespace expense_tracker.Models
+{
+    public record YearlySummaryDto(int Year, int Month, decimal Income,
+        decimal Expense
+    );
+    public record MonthlySummaryDto(int Year, int Month,
+        decimal Income, decimal Expense
+    );
+    public record TypeSummaryDto(string TransactionType, decimal Total);
+}

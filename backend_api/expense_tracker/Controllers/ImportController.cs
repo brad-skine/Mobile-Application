@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace expense_tracker.Controllers
 {
     [ApiController]
-    [Route("api/import")]
+    [Route("api/import")] 
     
     public class ImportController : ControllerBase
     {
