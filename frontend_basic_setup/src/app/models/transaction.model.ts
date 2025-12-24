@@ -1,7 +1,7 @@
 export interface TransactionModel{
-    Date: string;
-    TransactionType: string;
-    Description: string;
-    Amount: number;
-    Balance: number;
+    date: string;
+    transactionType: string;
+    description: string;
+    amount: number;
+    balance: number;
 }

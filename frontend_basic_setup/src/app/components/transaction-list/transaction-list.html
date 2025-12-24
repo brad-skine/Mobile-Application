@@ -6,19 +6,20 @@
   
 @else if (error) {
     <p class="error">{{ error }}</p>
-  }
-
-  @else {   <!-- if (!loading && !error) { -->
+  } 
+  
+@else {   <!-- if (!loading && !error) { -->
+    <!-- console.log("Displaying transactions:", transactions); -->
     @for (transaction of transactions; track transaction) {
       <div class="expense-item">
         <div>
-          <strong>{{ transaction.Description }}</strong>
+          <strong>{{ transaction.description }}</strong>
           <div class="category">
-            {{ transaction.TransactionType }}
+            {{ transaction.transactionType }}
           </div>
         </div>
         <div class="amount">
-          ${{ transaction.Amount | number:'1.2-2' }}
+          ${{ transaction.amount | number:'1.2-2' }}
         </div>
       </div>
     }
