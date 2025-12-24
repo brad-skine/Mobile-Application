@@ -1,0 +1,25 @@
+.expense-list {
+  width: 100%;
+  max-width: 420px;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+}
+
+.category {
+  font-size: 0.75rem;
+  color: var(--secondary-color);
+}
+
+.amount {
+  font-weight: 600;
+}

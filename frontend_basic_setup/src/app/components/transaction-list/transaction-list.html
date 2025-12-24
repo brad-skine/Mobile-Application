@@ -1,0 +1,27 @@
+<div class="expense-list">
+
+  @if (loading == true && !error)  {
+    <p>Loading expenses ....</p>
+  }  
+  
+@else if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @else {   <!-- if (!loading && !error) { -->
+    @for (transaction of transactions; track transaction) {
+      <div class="expense-item">
+        <div>
+          <strong>{{ transaction.Description }}</strong>
+          <div class="category">
+            {{ transaction.TransactionType }}
+          </div>
+        </div>
+        <div class="amount">
+          ${{ transaction.Amount | number:'1.2-2' }}
+        </div>
+      </div>
+    }
+  }
+
+</div>

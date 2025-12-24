@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-
+import { TransactionListComponent } from './components/transaction-list/transaction-list';
 @Component({
   selector: 'app-root',
-  imports: [],
+  standalone: true,
+  imports: [TransactionListComponent],
   templateUrl: "./app.html",
   styleUrls: ['./app.scss'],
 })
