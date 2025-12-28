@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { TransactionModel } from '../models/transaction.model';
 
 @Injectable({providedIn: 'root',})
@@ -8,7 +8,18 @@ import { TransactionModel } from '../models/transaction.model';
     private apiUrl = "https://localhost:7283/api/transactions/all";
 
     private http = inject(HttpClient)
-    getAllTransactions(): Observable<TransactionModel[]> {
-      return this.http.get<TransactionModel[]>(this.apiUrl);
+    private  refresh$ = new BehaviorSubject<void>(undefined)
+
+    getAllTransactions():Observable<TransactionModel[]> {
+      return this.refresh$.pipe(
+        switchMap(() =>
+          this.http.get<TransactionModel[]>(this.apiUrl)
+      ));
+    }
+
+
+
+    triggerRefresh() {
+      this.refresh$.next();
     }
   }

@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { importDataService } from './import_data.service';
 import { Observable } from 'rxjs';
-
+import { TransactionService } from 'src/app/services/transaction.service';
+import { monthlySalesService } from 'src/app/services/monthly_sales.service';
 @Component({
   selector: 'app-import_button',
   standalone: true,
@@ -12,18 +13,32 @@ import { Observable } from 'rxjs';
 }) 
 export class ImportButtonComponent{
     private importService = inject(importDataService); 
+    private transactionService = inject(TransactionService);
+    private monthlySalesService = inject(monthlySalesService)
     // import_result$: Observable<string> = this.importService.importData();
+
+    uploadStatus = signal<'idle' | 'success' | 'error'>('idle');
+    
     onFileSelect(input: HTMLInputElement): void {
         // this.importService.importData();
         if (input == null || input.files == null) {
             console.error("null input")
             return
         }
-
+    
         const file = input.files[0]
         this.importService.importData(file).subscribe({
-            next: () => console.log('Import success'),
-            error: err => console.error('Import failed', err)
+            next: () => {
+                console.log('Import success')
+                this.uploadStatus.set('success');
+                this.transactionService.triggerRefresh();
+                this.monthlySalesService.triggerRefresh();
+
+            },
+            error: err => {
+                console.error('Import failed', err)
+                this.uploadStatus.set('error')
+            }
         });
     
     }

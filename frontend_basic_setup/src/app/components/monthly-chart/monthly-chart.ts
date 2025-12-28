@@ -15,7 +15,9 @@ import {
   GridComponent,
   DatasetComponent,
   TransformComponent,
-  LegendComponent
+  LegendComponent,
+  DataZoomComponent,
+  ToolboxComponent
 } from 'echarts/components';
 
 import { CanvasRenderer } from 'echarts/renderers';
@@ -27,7 +29,9 @@ echarts.use([
   DatasetComponent,
   TransformComponent,
   CanvasRenderer,
-  LegendComponent
+  LegendComponent,
+  DataZoomComponent,
+  ToolboxComponent
 ]);
 
 @Component({
@@ -54,31 +58,78 @@ export class MonthlyChartComponent{
       if (!data.length) return null;
 
       return {
-
+        textStyle: {
+          fontSize: '1rem'
+        },
         title: {
-          text: 'Monthly Income vs Expense',
+          text: 'Monthly Income\nvs Expense',
           left: 'center',
           textStyle: {
-            color: '#cbd5f5'
-          }
+            color: '#cbd5f5',
+            fontSize: '1rem'
+          },
+
         },
-        tooltip: { trigger: 'axis' },
+        tooltip: { trigger: 'axis', confine: true},
         legend: {
           data: ['Income', 'Expense'],
-          top: 36
+          top: 60
         },
         grid: {
           left: 40,
           right: 20,
-          bottom: 50,
-          top: 70
+          bottom: 100,
+          top: 100
         },
         xAxis: {
           type: 'category',
           data: data.map(s => `${s.month } ${s.year}`),
           axisLabel: { rotate: 45 }
         },
-        yAxis: { type: 'value' },
+        yAxis: { 
+          type: 'value' 
+        },
+
+         dataZoom: [
+        {
+          type: 'slider',
+          show: true,
+          start: 4,
+          end: 100,
+          handleSize: 8
+        },
+        {
+          type: 'inside',
+          start: 94,
+          end: 100
+        }
+      ],
+      toolbox: {
+
+        show: true,
+        orient: 'vertical',
+        bottom: '50%',
+        // top: '50%',
+        feature: {
+            // Enable the built-in restore button
+            
+            restore: {
+                show: true,
+                title: 'Reset Zoom' 
+            },
+
+            dataView: {
+                show: true,
+                readOnly: false
+            },
+            saveAsImage: {
+                show: true
+            }
+        }, //iconStyle: {
+            // color: 'red'
+        //}
+    },
+
         series: [
           {
             name: 'Income',

@@ -10,4 +10,16 @@
  Upload files
 </label>
 
-</div>
+
+@if (uploadStatus() === "idle") {
+    <p>Awaiting upload</p>
+}
+
+
+@if (uploadStatus() === "success") {
+    <p>Upload was a success</p>
+}
+
+@if (uploadStatus() === "error") {
+    <p>Upload had an error</p>
+}
