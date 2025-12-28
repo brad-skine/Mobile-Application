@@ -27,6 +27,7 @@ namespace expense_tracker.Services
 
             const string sql = """
                 SELECT 
+                id,
                 transaction_date AS Date,
                 transaction_type AS TransactionType,
                 description,

@@ -10,14 +10,14 @@ namespace expense_tracker.Services
                 throw new InvalidOperationException("Connection string 'localConnection' not found.");
 
 
-        public async Task<Models.ImportResult> ImportTransactionsAsync(Stream csvStream)
+        public async Task<int> ImportTransactionsAsync(Stream csvStream)
         {
 
             using var reader = new StreamReader(csvStream);
 
             var config = new CsvHelper.Configuration.CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                PrepareHeaderForMatch = args => args.Header.Trim().ToLower(), 
+                PrepareHeaderForMatch = args => args.Header.Trim().ToLower(),
                 MissingFieldFound = null // optional: ignore missing columns
             };
 
@@ -31,7 +31,7 @@ namespace expense_tracker.Services
             int skipped = 0; // Counter for skipped records might not use as slow
 
 
-           foreach (var csvTransaction in records)
+            foreach (var csvTransaction in records)
             {
                 var transaction = new Models.Transaction
                 {
@@ -41,7 +41,7 @@ namespace expense_tracker.Services
                     Amount = Utils.MoneyParser.ParseMoney(csvTransaction.Amount),
                     Balance = Utils.MoneyParser.ParseMoney(csvTransaction.Balance)
                 };
-                
+
                 using var command = new NpgsqlCommand(
                      """
                     INSERT INTO transactions
@@ -58,24 +58,21 @@ namespace expense_tracker.Services
                 command.Parameters.AddWithValue("description", transaction.Description);
                 command.Parameters.AddWithValue("amount", transaction.Amount);
                 command.Parameters.AddWithValue("balance", transaction.Balance);
-        
+
                 int new_row = await command.ExecuteNonQueryAsync();
                 if (new_row == 1)
                 {
                     inserted++;
-                } else
+                }
+                else
                 {
                     skipped++;
                 }
-                   
+
             }
 
-            return new Models.ImportResult
-            {
-                Inserted = inserted,
-                Skipped = skipped
-            };
-        }
+            return inserted;
 
+        }
     }
 }

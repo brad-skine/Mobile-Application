@@ -1,4 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 
+html, body {
+  height: 100%;
+  overflow: visible;
+  // font-family: ;
+  background-color: #121212;
+  color: #fffdfd;
+}
 
 .app_container {
   display: flex;
@@ -35,15 +46,14 @@
   align-items: flex-start;
 }
 
-.placeholder-card {
+.body_content {
   width: 100%;
   max-width: 420px;
   padding: 1.25rem;
 
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  backdrop-filter: blur(8px);
-
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   color: #cbd5f5;
 }

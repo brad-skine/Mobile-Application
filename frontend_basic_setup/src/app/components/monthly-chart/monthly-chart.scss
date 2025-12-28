@@ -1,0 +1,46 @@
+.sale_chart_container {
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.sales_list {
+  max-height: 50vh;       /* adjust as needed */
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Optional: improve scrollbar look */
+.sales_list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sales_list::-webkit-scrollbar-thumb {
+  background-color: #2f00ffc9;
+  border-radius: 4px;
+}
+.sale_item {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f7f7f7;
+  padding: 10px 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.month {
+  font-weight: bold;
+  color: #333;
+}
+
+.total {
+  color: #2a9d8f;
+  font-weight: bold;
+}
+
+
+.monthlyChart {
+  width: 100%;
+  height: 400px;
+  color: rgb(255, 255, 255);
+  background-color: rgba(202, 79, 226, 0.158);
+}

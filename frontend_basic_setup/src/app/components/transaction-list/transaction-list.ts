@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransactionModel } from 'src/app/models/transaction.model';
 import { TransactionService } from 'src/app/services/transaction.service';
@@ -19,6 +19,5 @@ export class TransactionListComponent  {
   private transactionService = inject(TransactionService); 
   loading = true;
   error: string | null = null; // so can check if error then display it
-
   transactions$: Observable<TransactionModel[]> = this.transactionService.getAllTransactions();
 }

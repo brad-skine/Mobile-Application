@@ -7,7 +7,14 @@
  */
 
 import {ApplicationConfig} from '@angular/core';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideEchartsCore} from 'ngx-echarts';
+import * as echarts from 'echarts/core';
+
 
 export const appConfig: ApplicationConfig = {
-  providers: [],
+  providers: [
+    provideHttpClient(),
+    provideEchartsCore({ echarts})
+  ],
 };

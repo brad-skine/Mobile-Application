@@ -1,0 +1,14 @@
+.import_button {
+    width: auto;
+    height: 40px;
+
+}
+
+.import_button:hover {
+    background-color: rgb(39, 39, 219);
+}
+
+.import_button:active {
+    color: white;
+    background-color: red;
+}

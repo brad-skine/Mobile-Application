@@ -21,12 +21,17 @@ namespace expense_tracker.Controllers
             {
                 return BadRequest("Invalid file uploaded");
             }
+            
+            if (!file.FileName.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest("needs a csv file");
+            }
+
+
             using var stream = file.OpenReadStream();
             var row_count = await _csvImportService.ImportTransactionsAsync(stream);
             return Ok(new { 
                 message = "Import successful and data loaded into database",
-                inserted = row_count.Inserted,
-                skipped = row_count.Skipped
             });
         }
     }
