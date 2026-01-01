@@ -4,12 +4,16 @@
   padding: 0;}
 :root {
   --primary-color: skyblue;
-  --secondary-color: #191792;
+  --secondary-color: #4846f3;
   --accent-color: #e8e7fa;
   --shadow-color: #E8E8E8;
+  --background-color: #3f7fff23;
 }
 html {
   font-size: 17px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-snap-type: mandatory;
 }
 
 body {

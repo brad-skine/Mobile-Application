@@ -1,7 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { MonthlySalesModel } from 'src/app/models/monthly_sale.model';
 import { monthlySalesService } from 'src/app/services/monthly_sales.service';
-import { Observable } from 'rxjs';
 import { CommonModule} from '@angular/common';
 import { NgxEchartsDirective, provideEchartsCore} from 'ngx-echarts';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -45,7 +43,6 @@ echarts.use([
 
 export class MonthlyChartComponent{
 
-  monthly_sales: MonthlySalesModel[] = [];
   protected monthlySalesService = inject(monthlySalesService); 
   loading = true;
   error: string | null = null; // so can check if error then display it
@@ -77,7 +74,7 @@ export class MonthlyChartComponent{
         },
         grid: {
           left: 40,
-          right: 20,
+          right: 30,
           bottom: 100,
           top: 100
         },
@@ -108,7 +105,8 @@ export class MonthlyChartComponent{
 
         show: true,
         orient: 'vertical',
-        bottom: '50%',
+        bottom: '45%',
+        right: -10,
         // top: '50%',
         feature: {
             // Enable the built-in restore button

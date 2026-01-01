@@ -2,9 +2,11 @@
 
   @if (transactions$ | async; as transactions){
     @for (transaction of transactions; track transaction.id) {
-      <div class="expense-item">
+      <div class="expense-item"
+      [class.expense-negative]="transaction.amount < 0"
+        [class.expense-positive]="transaction.amount >= 0">
         <div>
-          <strong>{{ transaction.transactionType }}</strong>
+          <strong class = "description">{{ transaction.description }}</strong>
           <div class="category">
             {{ transaction.transactionType }}
           </div>
