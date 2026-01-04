@@ -47,9 +47,9 @@ jobs:
     - name: Azure Login
       uses: azure/login@v2
       with:
-        client-id: ${{ vars.expense_tracker_api_CLIENT_ID_4175 }}
-        tenant-id: ${{ vars.expense_tracker_api_TENANT_ID_8F10 }}
-        subscription-id: ${{ vars.expense_tracker_api_SUBSCRIPTION_ID_8F10 }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID  }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
