@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { importDataService } from './import_data.service';
-import { Observable } from 'rxjs';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { monthlySalesService } from 'src/app/services/monthly_sales.service';
 import { TypeSummaryService } from '../type_pie_chart/type_summary.service';

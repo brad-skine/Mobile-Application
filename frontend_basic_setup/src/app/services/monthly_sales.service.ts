@@ -2,10 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { MonthlySalesModel } from '../models/monthly_sale.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({providedIn: 'root',})
   export class monthlySalesService {
-    private apiUrl = "https://localhost:7283/api/transactions/summary/monthly";
+    private apiUrl = environment.apiUrl + "/api/transactions/summary/monthly";
     private http = inject(HttpClient);
 
     private refresh$ = new BehaviorSubject<void>(undefined)

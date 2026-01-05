@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { environment } from 'src/environments/environment';
 @Injectable({providedIn: 'root',})
   export class importDataService {
-    private apiUrl = "https://localhost:7283/api/import/transactions";
+    private apiUrl = environment.apiUrl + "/api/import/transactions";
     private http = inject(HttpClient)
   
     importData(csvData: File) {
