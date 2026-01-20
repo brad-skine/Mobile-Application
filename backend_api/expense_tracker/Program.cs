@@ -13,7 +13,7 @@ builder.Services.AddScoped<expense_tracker.Services.CsvImportService>();
 builder.Services.AddScoped<expense_tracker.Services.TransactionQueryService>();
 
 builder.Services.AddScoped<expense_tracker.Services.AuthService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<expense_tracker.Services.TokenService>();
 
 //builder.Services.AddOpenApi(); maybe for later versions
 builder.Services.AddEndpointsApiExplorer();

@@ -27,7 +27,8 @@ namespace expense_tracker.Services
                 INSERT INTO users (id, email, password_hash)
                 VALUES (@Id, @Email, @PasswordHash)
                 """;
-
+                
+            using var conn = GetConnection();
             var exist = await conn.ExecuteScalarAsync<bool>(
                 checkSql, new {Email= email});
 
@@ -36,7 +37,6 @@ namespace expense_tracker.Services
             }
             var hash = BCrypt.Net.BCrypt.HashPassword(password);
 
-            using var conn = GetConnection();
             await conn.ExecuteAsync(insertSql, new
             {
                 ID = Guid.NewGuid(),
